@@ -37,6 +37,8 @@ namespace SlidingPanels.Panels
 		public LeftPanelViewController (SlidingPanelsNavigationViewController controller) : base ("LeftPanelViewController", null)
 		{
 			PanelsNavController = controller;
+
+
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -50,6 +52,12 @@ namespace SlidingPanels.Panels
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			string[] tableItems = new string[] {"can't scroll","can't scroll","can't scroll","can't scroll","can't scroll","can't scroll",
+				"can't scroll","can't scroll","can't scroll","can't scroll","can't scroll","can't scroll",
+				"can't scroll","can't scroll","can't scroll","can't scroll","can't scroll","can't scroll",
+				"can't scroll","can't scroll","can't scroll","can't scroll","can't scroll","can't scroll"
+				,"can't scroll","can't scroll","can't scroll","can't scroll","can't scroll","can't scroll"};
+			TableView.Source = new TableSource(tableItems);
 			
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
@@ -58,16 +66,28 @@ namespace SlidingPanels.Panels
 		{
 			base.ViewWillAppear (animated);
 		}
-		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
-		{
-			PanelsNavController.PopToRootViewController(false);
-			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
-		}
 
-		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender)
+	}
+
+	public class TableSource : UITableViewSource {
+		string[] tableItems;
+		string cellIdentifier = "TableCell";
+		public TableSource (string[] items)
 		{
-			PanelsNavController.PushViewController(new ExampleContentB(), true);
-			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
+			tableItems = items;
+		}
+		public override int RowsInSection (UITableView tableview, int section)
+		{
+			return tableItems.Length;
+		}
+		public override UITableViewCell GetCell (UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
+		{
+			UITableViewCell cell = tableView.DequeueReusableCell (cellIdentifier);
+			// if there are no cells to reuse, create a new one
+			if (cell == null)
+				cell = new UITableViewCell (UITableViewCellStyle.Default, cellIdentifier);
+			cell.TextLabel.Text = tableItems[indexPath.Row];
+			return cell;
 		}
 	}
 }

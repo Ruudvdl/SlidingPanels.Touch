@@ -1,24 +1,26 @@
 // WARNING
 //
 // This file has been generated automatically by Xamarin Studio to store outlets and
-// actions made in the Xcode designer. If it is removed, they will be lost.
+// actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
 using MonoTouch.Foundation;
+using System.CodeDom.Compiler;
 
 namespace SlidingPanels.Panels
 {
 	[Register ("LeftPanelViewController")]
 	partial class LeftPanelViewController
 	{
-		[Action ("ShowScreenA:")]
-		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender);
-
-		[Action ("ShowScreenB:")]
-		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender);
+		[Outlet]
+		MonoTouch.UIKit.UITableView TableView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (TableView != null) {
+				TableView.Dispose ();
+				TableView = null;
+			}
 		}
 	}
 }
